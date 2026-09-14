@@ -1,8 +1,8 @@
 {
   "name": "dsh-memory",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "private": true,
-  "description": "Memory system: cross-session memory ledger with a sci-fi HUD panel. Host half incrementally indexes conversation events from active sessions into ~/.dsh/storages/memory.jsonl; client half adds a '记忆' tab next to '轨迹' in the conversation view.",
+  "description": "Memory system: cross-session memory ledger with a sci-fi HUD panel. Host half incrementally indexes conversation events from active sessions into ~/.dsh/storages/memory.jsonl and persists the panel toggles in the `memory` settings namespace; client half adds the '◈ 记忆库' button plus the full-screen star-map overlay.",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
@@ -20,5 +20,8 @@
       ]
     }
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@deepseek-ai/schemastery": "^3.18.2"
+  }
 }
