@@ -1,6 +1,6 @@
 {
   "name": "dsh-memory",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "private": true,
   "description": "Memory system: cross-session memory ledger with a sci-fi HUD panel. Host half incrementally indexes conversation events from active sessions into ~/.dsh/storages/memory.jsonl and persists the panel toggles in the entry config; client half adds the '◈ 记忆库' button plus the full-screen star-map overlay.",
   "type": "module",
