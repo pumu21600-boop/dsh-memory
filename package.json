@@ -1,8 +1,8 @@
 {
   "name": "dsh-memory",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "private": true,
-  "description": "Memory system: cross-session memory ledger with a sci-fi HUD panel. Host half incrementally indexes conversation events from active sessions into ~/.dsh/storages/memory.jsonl and persists the panel toggles in the `memory` settings namespace; client half adds the '◈ 记忆库' button plus the full-screen star-map overlay.",
+  "description": "Memory system: cross-session memory ledger with a sci-fi HUD panel. Host half incrementally indexes conversation events from active sessions into ~/.dsh/storages/memory.jsonl and persists the panel toggles in the entry config; client half adds the '◈ 记忆库' button plus the full-screen star-map overlay.",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
@@ -11,6 +11,9 @@
     "./package.json": "./package.json"
   },
   "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
     "client": {
       "platform": "web",
       "inject": [
@@ -19,6 +22,9 @@
         "@deepseek-ai/dsh-client-ui-conversation"
       ]
     }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh": ">=0.2.0-rc.2"
   },
   "license": "MIT",
   "dependencies": {

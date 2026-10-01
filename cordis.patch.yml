@@ -1,0 +1,8 @@
+# dsh-memory bundle patch（DSH ≥ 0.2.0 插件即 bundle）。
+# 本包被加入 profile 的 dsh.profile.bundles 后，由这层 patch 把插件自身
+# 插入 cordis 树；条目 id 即设置命名空间，schema 来自 lib/index.js 的
+# Config 导出（hideStars / closeOnBlur）。
+
+- insert:
+    - id: dsh-memory
+      name: 'dsh-memory'

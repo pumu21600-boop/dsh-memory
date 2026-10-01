@@ -8,28 +8,32 @@ DSH 记忆插件 — 自动索引全部会话历史到记忆库。
 - 新会话实时增量采集
 - 输入框上方常驻「◈ 记忆库」按钮，点开是全屏星际记忆地图：每个光点对应一轮对话，支持搜索、查看、删除
 - 会话有内容后，会话头部（`conversation.session.header.actions` 插槽）也会出现同名按钮
-- 界面开关（星空背景 / 点击穿透）由宿主持久化在 settings.yaml 的 `memory` 命名空间，**不使用 localStorage**
+- 界面开关（星空背景 / 点击穿透）由宿主持久化在 profile 条目配置（`lib/index.js` 导出的 `Config` schema 驱动，不再用 settings.register），**不使用 localStorage**
 - **原文全文搜索**：输入 ≥2 个字符即对全部会话归档做全文检索（user/assistant 消息原文，大小写不敏感），返回带高亮的命中片段与来源会话，可跳转到对应会话
 
-## 安装
+## 安装（DSH ≥ 0.2.0：插件即 bundle）
 
-1. 把本目录链接到 profile 的插件目录（junction 指向源码目录）：
+1. 把本目录 junction 到桌面端 profile 的插件目录：
 
    ```powershell
    New-Item -ItemType Junction `
-     -Path "$env:USERPROFILE\.dsh\profiles\web\node_modules\dsh-memory" `
+     -Path "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\dsh-memory" `
      -Target "C:\path\to\dsh-memory"
    ```
 
-2. 在 `~/.dsh/profiles/web/cordis.patch.yml` 追加（必须用 `insert` 形式，写成顶层 `- id: / name:` 只会得到 `patch: entry ... not found` 警告且不生效）：
+2. 在 `~/.dsh/profiles/desktop/package.json` 里把插件加入 `dependencies` 与
+   `dsh.profile.bundles`（0.2.0 起 profile 的 cordis.patch.yml 不再负责装载插件；
+   本包自带 `dsh.bundle.patch`，无需再写用户层 insert）：
 
-   ```yaml
-   - insert:
-       - id: dsh-memory
-         name: 'dsh-memory'
+   ```json
+   "dependencies": { "dsh-memory": "0.4.1" }
    ```
 
-3. 重启 DSH 后端并刷新页面。
+   ```json
+   "dsh": { "profile": { "bundles": ["@deepseek-ai/dsh-base", "@deepseek-ai/dsh-web-app", "dsh-memory"] } }
+   ```
+
+3. 重启桌面端即生效。
 
 ## 使用
 
@@ -38,10 +42,11 @@ DSH 记忆插件 — 自动索引全部会话历史到记忆库。
 ## 卸载
 
 ```powershell
-Remove-Item "$env:USERPROFILE\.dsh\profiles\web\node_modules\dsh-memory"
+Remove-Item "$env:USERPROFILE\.dsh\profiles\desktop\node_modules\dsh-memory"
 ```
 
-再从 `cordis.patch.yml` 的 `insert:` 列表里删掉对应条目；如需连记忆数据一起清除，另外删除 `~/.dsh/storages/memory.jsonl`。
+再从 `~/.dsh/profiles/desktop/package.json` 的 `dependencies` 与
+`dsh.profile.bundles` 里删掉对应条目；如需连记忆数据一起清除，另外删除 `~/.dsh/storages/memory.jsonl`。
 
 ## License
 
